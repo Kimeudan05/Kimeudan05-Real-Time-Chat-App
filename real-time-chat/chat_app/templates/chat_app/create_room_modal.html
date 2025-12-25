@@ -1,0 +1,32 @@
+{% load crispy_forms_tags %}
+
+<div id="createRoomModal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">Create New Room</h3>
+                <button onclick="document.getElementById('createRoomModal').classList.add('hidden')" 
+                        class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form method="post" action="{% url 'create-room' %}">
+                {% csrf_token %}
+                {{ room_form|crispy }}
+                
+                <div class="flex space-x-3 mt-6">
+                    <button type="button" 
+                            onclick="document.getElementById('createRoomModal').classList.add('hidden')" 
+                            class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2.5 rounded-lg font-medium transition">
+                        Cancel
+                    </button>
+                    <button type="submit" 
+                            class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-lg font-medium transition">
+                        Create Room
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -51,4 +51,14 @@ class CustomLogoutView(LogoutView):
 
 @login_required
 def profile_view(request):
-    return render(request, "core/profile.html")
+    user = request.user
+    # Calculate counts in the view
+    direct_messages_count = user.chat_rooms.filter(room_type="direct").count()
+    # If you have 'group' rooms, you might want this too:
+    group_rooms_count = user.chat_rooms.filter(room_type="group").count()
+
+    context = {
+        "direct_messages_count": direct_messages_count,
+        "group_rooms_count": group_rooms_count,
+    }
+    return render(request, "core/profile.html", context)
